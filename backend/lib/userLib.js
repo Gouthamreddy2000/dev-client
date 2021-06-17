@@ -23,8 +23,9 @@ module.exports.update = function(req,res)
    // console.log(req);
    var username=req.body.username;
     var obj = userModel.find({username: username},function(err,obj){
+        console.log(obj);
         console.log(username);
-    userModel.findByIdAndUpdate(obj[0]._id, {username: JSON.stringify(req.body.username),date: JSON.stringify(req.body.date),email: JSON.stringify(req.body.email),phonenumber: JSON.stringify(req.body.phonenumber)},
+    userModel.findByIdAndUpdate(obj[0]._id, {username: JSON.stringify(req.body.username),date: JSON.stringify(req.body.date),email: JSON.stringify(req.body.email),phonenumber: JSON.stringify(req.body.phonenumber),profilePicUrl:JSON.stringify(req.body.profilepicurl)},
      function (err, docs) {
     if (err){
 console.log(err)

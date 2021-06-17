@@ -13,6 +13,9 @@
   <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
 <body>
+  <img class="img" src="/profile.jpg">
+  <input   type="file" class="file" >
+  <button  class="button">update</button>
     <form class="d-flex">
         <form  aria-disabled="true">
             <fieldset>
@@ -22,6 +25,7 @@
         <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
         <label class="form-check-label" for="flexSwitchCheckDefault">EDIT PROFILE</label>
       </div>
+     
               <div class="form-group">
                 <label for="exampleInputEmail1" class="form-label mt-4">Username</label>
                 <input type="text" class="form-control" id="username" aria-describedby="emailHelp" placeholder="Enter email" disabled="true">
@@ -45,6 +49,7 @@
                 
             </fieldset>
         </form>
+       
         <button onclick="save()" type="submit" class="btn btn-primary">Submit</button>
     </form>
 
@@ -58,6 +63,10 @@
 </body>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script>
+  $(".file").hide();
+  
+  $(".button").hide();
+  
     $( ".form-check-input" ).on( "change", function() {
         if($('.form-check-input').prop('checked')){
             //console.log("checked");
@@ -65,14 +74,24 @@
         $("#date").prop("disabled", false);
         $("#email").prop("disabled", false);
         $("#phonenumber").prop("disabled", false);
+        $(".file").show();
+        $(".button").show();
         }
         else{
             $("#username").prop("disabled", true);
         $("#date").prop("disabled", true);
         $("#email").prop("disabled", true);
         $("#phonenumber").prop("disabled", true);
+        $(".file").hide();
+        $(".button").hide();
         }
 });
+var x;
+$(".file").change(function(event){
+    var x = URL.createObjectURL(event.target.files[0]);
+    console.log(x);
+    $(".img").attr("src",x);
+  })
 
     function save(){
       console.log("saved");
@@ -82,19 +101,23 @@
     userObject.birthday=$("#date").val();
     userObject.email=$("#email").val();
     userObject.phonenumber=$("#phonenumber").val();
+    userObject.profilepicurl=x;
+    console.log(x);
+    console.log(userObject);
     //console.log(userObject);
     $.ajax({
         url: "/edit"+username,
         type: "PUT",
         data: userObject,
         success: function(data) {
+          console.log(data);
        /*for(var i=0;i<data.length;i++) {
            console.log(data[i]);
           addRow(data[i]);
         }*/
         },
         error: function (xhr, status, error) {
-        //alert(error);
+        alert(error);
         }
         });
     /*$.post("/api/users",userObject)

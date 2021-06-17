@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var userLib=require('../backend/lib/userLib');
 var user=require('../backend/models/registrationModel');
+var user1=require('../backend/models/userModel');
 const CLIENT_ID= '445093466494-u1c7jg8178j553gv6o6ao8uohia3cja6.apps.googleusercontent.com';
 const {OAuth2Client} = require('google-auth-library');
 var session = require('express-session');
@@ -67,6 +68,15 @@ router.post("/regis",function(req,res){
       console.log(data);
       res.json(data);
   });
+//   user1.insertMany(data,(err,collection)=>{
+//     if(err)
+//     {
+//         throw err;
+//     }
+//     console.log(data);
+//     res.json(data);
+// });
+  
 });
 router.put("/edit:username", userLib.update);
 router.post('/api/logout',function(req,res){

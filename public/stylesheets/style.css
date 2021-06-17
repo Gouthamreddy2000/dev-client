@@ -6,8 +6,26 @@ body {
 a {
   color: #00B7FF;
 }
+.img{
+  float: right;
+  width: 100px;
 
+  margin-right:400px;
+  border-radius: 20px;
+}
+.file
+{
+  float: right;
+  margin-right: 10px;
+  margin-top: 150px;
+  
+}
+.button{
+  float: right;
+  margin-left: 100px;
+  margin-top: 150px;
 
+}
 .form-signin {
   width: 100%;
   max-width: 330px;
