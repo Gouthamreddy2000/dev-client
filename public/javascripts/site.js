@@ -11,6 +11,7 @@
         $("#signedIn").hide();
     }
 }*/
+$("rolesignedIn").hide();
 $("#lnkSignout").on('click',function(){
     $.post( "/api/logout")
     .done(function( data ) {
@@ -20,6 +21,7 @@ $("#lnkSignout").on('click',function(){
         if(data.success==false){
             $("#notSignedIn").show();
             $("#signedIn").hide();
+            $("rolesignedIn").hide();
             signOut();
         }
     })
@@ -66,6 +68,7 @@ function onSignIn(googleUser) {
             //getPayload();
             //$("#notSignedIn").show();
             $("#signedIn").show();
+            $("rolesignedIn").show();
         $("#notSignedIn").hide();
         $("#lnkLogout").hide();
         $("#lnkSignout").show();
@@ -79,6 +82,7 @@ $(document).ready(function(){
         if(loggedIn){
             console.log("Logged In");
             $("#signedIn").show();
+            $("rolesignedIn").show();
             $("#notSignedIn").hide();
            // $("#welcomeUser").html("Welcome "+ userObject.getCurrentUser());
         }
@@ -86,6 +90,7 @@ $(document).ready(function(){
             console.log("Not Logged In");
             $("#notSignedIn").show();
             $("#signedIn").hide();
+            $("rolesignedIn").hide();
         }
     }
     var userObject = {
@@ -118,6 +123,7 @@ $(document).ready(function(){
     console.log("jquery running");
 $("#notSignedIn").show();
 $("#signedIn").hide();
+$("rolesignedIn").hide();
 $("#lnkLogout").click(function(){
     $.post( "/api/loggedout")
     .done(function( data ) {

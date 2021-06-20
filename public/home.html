@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+</head>
+<body>
+    <div id="users">
+        <h>users</h>
+        <p>hi here we se the users</p>
+        <br>
+        <p> visit again heres to se your users</p>
+    </div>
+    <div id="table">
+    <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Type</th>
+            <th scope="col">Column heading</th>
+            
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="table-active">
+            <th scope="row"><img src="profile.jpg" alt="border-radius=20px" width="30px" height="20px"></th>
+            <td><a href="#">  username</a></td>
+            
+          </tr>
+          <!-- <tr class="table-active">
+            <th scope="row"><img src="profile.jpg" alt="border-radius=20px" width="30px" height="20px"></th>
+            <td><a> username</a></td>
+            
+          </tr> -->
+          <!-- <tr class="table-active">
+            <th scope="row"><img src="profile.jpg" alt="border-radius=20px" width="30px" height="20px"></th>
+            <td><a> username</a></td>
+             -->
+          </tr>
+          </tbody>
+          </table>
+          <table id="tab">
+
+          </table>
+</body>
+<style>
+    #users{
+        margin-top: 50px;
+        border-radius: 10px;
+        border: 3px solid brown;
+        width: 50%;
+       position: fixed;
+        z-index: 1;
+        top: 0;
+       overflow-x: hidden;
+    }
+    #table{
+        margin-top: 50px;
+        margin-right: 50px;
+        border-radius: 10px;
+        border: 3px solid brown;
+       position: fixed;
+        z-index: 1;
+        top: 0;
+       overflow-x: hidden;
+     padding-top: 20px;
+        margin-left: 630px;
+    }
+</style>
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+<meta name="google-signin-client_id" content="445093466494-u1c7jg8178j553gv6o6ao8uohia3cja6.apps.googleusercontent.com">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/js/bootstrap.min.js" integrity="sha512-EKWWs1ZcA2ZY9lbLISPz8aGR2+L7JVYqBAYTq5AXgBkSjRSuQEGqWx8R1zAX16KdXPaCjOCaKE8MCpU0wcHlHA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js" integrity="sha512-lbwH47l/tPXJYG9AcFNoJaTMhGvYWhVM9YI43CT+uteTRRaiLCui8snIgyAN8XWgNjNhCqlAUdzZptso6OCoFQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script>
+    $.ajax('/getallusers',{
+      
+      success:function(data,status,xhr){
+        console.log("hi");
+        console.log(data);
+        for( var i in data){
+          console.log(data[i].username);
+          var row = `<tr scope="row" class="test-row-">
+                       <td ><img src="${[data[i].profilePicUrl]}" width="30px" height="20px" ></td>
+                       <td>${data[i].username}</td>
+                       
+                       </tr>`
+          $('#tab').append(row);
+        }
+      },
+      error:function()  {
+        console.log("error")
+      }
+    })
+  </script>
+</html>

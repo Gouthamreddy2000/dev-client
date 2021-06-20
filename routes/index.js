@@ -79,6 +79,12 @@ router.post("/regis",function(req,res){
   
 });
 router.put("/edit:username", userLib.update);
+router.get("/profile:username", userLib.profile);
+router.get("/getallusers",userLib.getallusers);
+router.get("/profilepage", function(req,res){
+  let filepathcolor = __dirname +"./public/why.html";
+  res.sendFile(filepathcolor);
+})
 router.post('/api/logout',function(req,res){
   //console.log("hi");
   var response = {success: false, message: 'Login Failed', user: null };

@@ -15,7 +15,6 @@
 <body>
   <img class="img" src="/profile.jpg">
   <input   type="file" class="file" >
-  <button  class="button">update</button>
     <form class="d-flex">
         <form  aria-disabled="true">
             <fieldset>
@@ -63,9 +62,46 @@
 </body>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script>
+   var user=JSON.parse(localStorage.getItem('currentUser'));
+   var currentuser=user.username;
+  $.ajax('/getallusers',{
+      success:function(data,status,xhr){
+        var username=currentuser;
+        console.log("hi");
+        console.log(data);
+        for( var i in data){
+          console.log(data[i].username);
+          // console.log(userObject.username);
+          if (data[i].username==username){
+            console.log(data[i]);
+            $('#username').val(data[i].username);
+            $('#date').val(data[i].birthday);
+            $('#email').val(data[i].email);
+            console.log($("#email").val());
+            $('#phonenumber').val(data[i].phonenumber);
+            $('#url').val(data[i].profilePicUrl);
+            
+          }
+          // var row = `<tr scope="row" class="test-row-">
+          //              <td ><img src="${[data[i].profilePicUrl]}" width="30px" height="20px" ></td>
+          //              <td>${data[i].username}</td>
+                       
+          //              </tr>`
+          // $('#tab').append(row);
+        }
+       },
+       error:function()  {
+         console.log("error")
+       }
+     })
+  
   $(".file").hide();
   
   $(".button").hide();
+  // $("#username").prop("disabled", false);
+  // $("#date").prop("disabled", false);
+  // $("#email").prop("disabled", false);
+  // $("#phonenumber").prop("disabled", false);
   
     $( ".form-check-input" ).on( "change", function() {
         if($('.form-check-input').prop('checked')){
@@ -86,12 +122,13 @@
         $(".button").hide();
         }
 });
-var x;
+
 $(".file").change(function(event){
     var x = URL.createObjectURL(event.target.files[0]);
     console.log(x);
     $(".img").attr("src",x);
-  })
+    $("#url").val(x);
+})
 
     function save(){
       console.log("saved");
@@ -101,12 +138,27 @@ $(".file").change(function(event){
     userObject.birthday=$("#date").val();
     userObject.email=$("#email").val();
     userObject.phonenumber=$("#phonenumber").val();
-    userObject.profilepicurl=x;
-    console.log(x);
+   
+    userObject.profilePicUrl=$("#url").val();
     console.log(userObject);
+    // $.ajax({
+    //     url: "/profile"+username,
+    //     type: "GET",
+    //     success: function(data) {
+    //       console.log(data);
+    //    /*for(var i=0;i<data.length;i++) {
+    //        console.log(data[i]);
+    //       addRow(data[i]);
+    //     }*/
+    //     },
+    //     error: function (xhr, status, error) {
+    //     alert(error);
+    //     }
+    //     });
+    
     //console.log(userObject);
     $.ajax({
-        url: "/edit"+username,
+        url: "/edit"+currentuser,
         type: "PUT",
         data: userObject,
         success: function(data) {
@@ -120,6 +172,7 @@ $(".file").change(function(event){
         alert(error);
         }
         });
+        
     /*$.post("/api/users",userObject)
         .done(function(data){
             console.log(data);

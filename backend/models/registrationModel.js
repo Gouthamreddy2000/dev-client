@@ -37,6 +37,7 @@ const registration = new mongoose.Schema({
     trim: true,
     
   },
+  profilePicUrl : String
 });
 
 const registrationModel = mongoose.model("registration", registration);
