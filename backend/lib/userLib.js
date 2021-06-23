@@ -56,7 +56,7 @@ module.exports.profile=function(req,res){
     })
 }
 module.exports.upload=function(req,res,next){
-    const file=req.file;
+    const file=req.body.file;
     console.log(file);
     if (!file){
         const error =new Error('please chosse files');
@@ -69,7 +69,7 @@ module.exports.upload=function(req,res,next){
     let contenttype = file.mimetype;
     let immageb4= encoded_img;
 
-    var obj = userModel.find({username: "bharath"},function(err,obj){
+    var obj = userModel.find({username: req.body.username1},function(err,obj){
         // console.log(obj);
         // console.log(username);
     userModel.findByIdAndUpdate(obj[0]._id, {filename:filename1,contentType:contenttype,image:immageb4},

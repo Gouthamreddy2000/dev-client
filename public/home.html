@@ -84,7 +84,7 @@
         for( var i in data){
           console.log(data[i].username);
           var row = `<tr scope="row" class="test-row-">
-                       <td ><img src="${[data[i].profilePicUrl]}" width="30px" height="20px" ></td>
+                       <td ><img src='data:image/png;base64,${data[i].image}' width="30px" height="20px" ></td>
                        <td>${data[i].username}</td>
                        
                        </tr>`

@@ -83,9 +83,10 @@
             $('#date').val(data[i].birthday);
             $('#email').val(data[i].email);
             console.log($("#email").val());
-            $('#phonenumber').val(data[i].phonenumber);
-            $('#url').val(data[i].profilePicUrl);
-            $(".img").attr("src",'data:{data[i].contentType}:base64');
+            $('#phonenumber').val(data[i].phonenumber)
+            
+             $(".img").attr("src",`data:image/png;base64,${data[i].image}`);
+            // $(".img").attr("src",data:{data[i].contentType);
             
           }
           // var row = `<tr scope="row" class="test-row-">

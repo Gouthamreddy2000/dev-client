@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+const path =require('path');
 const fs =require('fs');
 const multer=require('multer');
 var userLib=require('../backend/lib/userLib');
@@ -105,27 +106,41 @@ router.get("/profilepage", function(req,res){
   let filepathcolor = __dirname +"./public/why.html";
   res.sendFile(filepathcolor);
 })
- router.post("/uploadimage" ,store.single('image'),userLib.upload);
-//  (req,res,next)=>{
-//    const file= req.file;
-//    if(!file){
-//      const error=new Error("please upload file");
-//      error.httpStatusCode=400;
-//      return next(error);
-//    }
-//    let img=fs.readFileSync(file.path)
-//    let encoded_img=img.toString('base64')
-//    res.send(file);
-//    });
-// // ,(req,res,next)=>{
-//   const files=req.files;
-//     if (!files){
-//         const error =new Error('please chosse files');
-//         error.httpStatusCode=400;
-//         return next(error)
-//     }
-//     res.json(files);
-// });
+ router.post("/uploadimage",store.single('image'), (req,res,next)=>{
+
+//  
+    const file=req.file;
+    console.log(file);
+    if (!file){
+        const error =new Error('please chosse files');
+        error.httpStatusCode=400;
+        return next(error)
+    }
+    let img=fs.readFileSync(file.path);
+    let encoded_img=img.toString('base64');
+    let filename1 = file.originalname;
+    let contenttype = file.mimetype;
+    let immageb4= encoded_img;
+
+    var obj = user.find({username: req.body.username1},function(err,obj){
+        // console.log(obj);
+        // console.log(username);
+    user.findByIdAndUpdate(obj[0]._id, {filename:filename1,contentType:contenttype,image:immageb4},
+     function (err, docs) {
+    if (err){
+     console.log(err)
+    }
+  //  else{
+  //     console.log("Updated User : ", docs);
+  //     }
+      });
+    
+    
+    })
+
+});
+// ,(req,res,next)=>{
+ 
 router.post('/api/logout',function(req,res){
   //console.log("hi");
   var response = {success: false, message: 'Login Failed', user: null };

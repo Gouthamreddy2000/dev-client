@@ -3,7 +3,7 @@ const multer=require('multer');
    
     destination: function(req,file,cb){
         console.log(req.body);
-        console.log(cb);
+
         cb(null,'uploads')
         
     },
