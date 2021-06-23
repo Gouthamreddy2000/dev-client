@@ -13,8 +13,12 @@
   <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
 <body>
+  <form action="/uploadimage" enctype="multipart/form-data" method="POST">
   <img class="img" src="/profile.jpg">
-  <input   type="file" class="file" >
+  <input   type="file" class="file" name="image" >
+  <input type="text" id="username1" name="username1">
+  <input type="submit" value="submit">
+</form>
     <form class="d-flex">
         <form  aria-disabled="true">
             <fieldset>
@@ -64,6 +68,7 @@
 <script>
    var user=JSON.parse(localStorage.getItem('currentUser'));
    var currentuser=user.username;
+   $('#username1').val(currentuser);
   $.ajax('/getallusers',{
       success:function(data,status,xhr){
         var username=currentuser;
@@ -80,6 +85,7 @@
             console.log($("#email").val());
             $('#phonenumber').val(data[i].phonenumber);
             $('#url').val(data[i].profilePicUrl);
+            $(".img").attr("src",'data:{data[i].contentType}:base64');
             
           }
           // var row = `<tr scope="row" class="test-row-">
@@ -128,6 +134,8 @@ $(".file").change(function(event){
     console.log(x);
     $(".img").attr("src",x);
     $("#url").val(x);
+    
+    
 })
 
     function save(){

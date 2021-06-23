@@ -1,5 +1,7 @@
 const { response } = require('express');
 var userModel=require('../models/registrationModel');
+const multer= require('multer');
+const fs =require('fs');
 module.exports.isUserValid=function(userJson,cb){
     var query = {username: userJson.username, password:userJson.password, isDeleted:{$ne : true}};
 
@@ -53,3 +55,35 @@ module.exports.profile=function(req,res){
         res.json(obj);
     })
 }
+module.exports.upload=function(req,res,next){
+    const file=req.file;
+    console.log(file);
+    if (!file){
+        const error =new Error('please chosse files');
+        error.httpStatusCode=400;
+        return next(error)
+    }
+    let img=fs.readFileSync(file.path);
+    let encoded_img=img.toString('base64');
+    let filename1 = file.originalname;
+    let contenttype = file.mimetype;
+    let immageb4= encoded_img;
+
+    var obj = userModel.find({username: "bharath"},function(err,obj){
+        // console.log(obj);
+        // console.log(username);
+    userModel.findByIdAndUpdate(obj[0]._id, {filename:filename1,contentType:contenttype,image:immageb4},
+     function (err, docs) {
+    if (err){
+console.log(err)
+}
+else{
+// console.log("Updated User : ", docs);
+}
+});
+    
+    
+     res.json(file);
+    })
+
+};

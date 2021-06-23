@@ -1,6 +1,9 @@
 var express = require('express');
 var router = express.Router();
+const fs =require('fs');
+const multer=require('multer');
 var userLib=require('../backend/lib/userLib');
+const store=require('../multer/multer');
 var user=require('../backend/models/registrationModel');
 var user1=require('../backend/models/userModel');
 const CLIENT_ID= '445093466494-u1c7jg8178j553gv6o6ao8uohia3cja6.apps.googleusercontent.com';
@@ -78,13 +81,51 @@ router.post("/regis",function(req,res){
 // });
   
 });
-router.put("/edit:username", userLib.update);
+// var storage = multer.diskStorage({
+   
+//   destination: function(req,file,cb){
+//       console.log("hi");
+//       cb(null,'uploads')
+      
+//   },
+//   filename:function(req,file,cb){
+//       var ext=file.originalname.substr(file.originalname.lastIndexOf('.'));
+//       console.log("hi");
+//       cb(null,file.fieldname+'-'+Date.now()+ext)
+
+//   }
+// })
+// var upload=multer({
+//   storage:storage
+// })
+router.put("/edit:username", userLib.update); 
 router.get("/profile:username", userLib.profile);
 router.get("/getallusers",userLib.getallusers);
 router.get("/profilepage", function(req,res){
   let filepathcolor = __dirname +"./public/why.html";
   res.sendFile(filepathcolor);
 })
+ router.post("/uploadimage" ,store.single('image'),userLib.upload);
+//  (req,res,next)=>{
+//    const file= req.file;
+//    if(!file){
+//      const error=new Error("please upload file");
+//      error.httpStatusCode=400;
+//      return next(error);
+//    }
+//    let img=fs.readFileSync(file.path)
+//    let encoded_img=img.toString('base64')
+//    res.send(file);
+//    });
+// // ,(req,res,next)=>{
+//   const files=req.files;
+//     if (!files){
+//         const error =new Error('please chosse files');
+//         error.httpStatusCode=400;
+//         return next(error)
+//     }
+//     res.json(files);
+// });
 router.post('/api/logout',function(req,res){
   //console.log("hi");
   var response = {success: false, message: 'Login Failed', user: null };
